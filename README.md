@@ -1,4 +1,4 @@
-# Python - ALX Hight Level Programming
+# Python - ALX High Level Programming
 
 ## Zen
 ### The Zen of Python, by Tim Peters
