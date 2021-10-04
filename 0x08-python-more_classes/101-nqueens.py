@@ -1,89 +1,46 @@
 #!/usr/bin/python3
-""" defines a Rectangle class"""
+""" puzzle queen challenge
+"""
+from sys import argv, exit
 
 
-class Rectangle:
-    """Rectangle Class"""
-    number_of_instances = 0
-    print_symbol = '#'
+def place(N, row, col, result):
+    """ place queens recursively """
+    while col < N:
+        if isvalid(row, col, result):
+            result.append([row, col])
+            if row == N-1:
+                print(result)
+                result.pop()
+            else:
+                place(N, row+1, 0, result)
+        col += 1
+    if len(result) > 0:
+        result.pop()
+    return
 
-    def __init__(self, width=0, height=0):
-        """ Init Method """
-        self.width = width
-        self.height = height
-        Rectangle.number_of_instances += 1
 
-    @property
-    def width(self):
-        """getter def"""
-        return self.__width
+def isvalid(row, col, result):
+    """ check if the position is valid """
+    diag1 = [l[0]+l[1] for l in result]
+    diag2 = [l[1]-l[0] for l in result]
+    cols = [l[1] for l in result]
+    rows = [l[0] for l in result]
+    if row in rows or col in cols or row+col in diag1 or col-row in diag2:
+        return False
+    return True
 
-    @width.setter
-    def width(self, value):
-        """setter def"""
-        if type(value) is not int:
-            raise TypeError('width must be an integer')
-        if value < 0:
-            raise ValueError('width must be >= 0')
-        self.__width = value
-
-    @property
-    def height(self):
-        """getter def"""
-        return self.__height
-
-    @height.setter
-    def height(self, value):
-        """setter def"""
-        if type(value) is not int:
-            raise TypeError('height must be an integer')
-        if value < 0:
-            raise ValueError('height must be >= 0')
-        self.__height = value
-
-    def area(self):
-        """define area def"""
-        return self.__width * self.__height
-
-    def perimeter(self):
-        """define perimeter def"""
-        if self.__width == 0 or self.__height == 0:
-            return 0
-        return(self.__width * 2) + (self.__height * 2)
-
-    def __str__(self):
-        """define informal print str"""
-        if self.__width == 0 or self.__height == 0:
-            return ""
-        else:
-            hsh = str(self.print_symbol)
-            return ((hsh*self.__width + "\n")*self.__height)[:-1]
-
-    def __repr__(self):
-        """define official print repr"""
-        return 'Rectangle({}, {})'.format(self.__width, self.__height)
-
-    def __del__(self):
-        """define delete method"""
-        Rectangle.number_of_instances -= 1
-        print('Bye rectangle...')
-
-    @staticmethod
-    def bigger_or_equal(rect_1, rect_2):
-        """
-            Biggest Rectangle (Rectangle)
-        """
-        if not isinstance(rect_1, Rectangle):
-            raise TypeError("rect_1 must be an instance of Rectangle")
-        if not isinstance(rect_2, Rectangle):
-            raise TypeError("rect_2 must be an instance of Rectangle")
-        Area1 = rect_1.area()
-        Area2 = rect_2.area()
-        if Area1 >= Area2:
-            return rect_1
-        return rect_2
-
-    @classmethod
-    def square(cls, size=0):
-        """ Returns a new Rectangle instance """
-        return (cls(size, size))
+if __name__ == "__main__":
+    length = len(argv)
+    if length != 2:
+        print("Usage: nqueens N")
+        exit(1)
+    if argv[1].isdigit() is False:
+        print("N must be a number")
+        exit(1)
+    N = int(argv[1])
+    if N < 4:
+        print("N must be at least 4")
+        exit(1)
+    result = []
+    place(N, 0, 0, result)
