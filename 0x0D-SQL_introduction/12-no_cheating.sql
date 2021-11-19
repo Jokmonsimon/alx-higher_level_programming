@@ -1,2 +1,2 @@
 -- Update table  record
-UPDATE score=10 FROM second_table WHERE id=3;
+UPDATE `second_table` SET `score` = '10' WHERE `second_table`.`name` = 'Bob';
