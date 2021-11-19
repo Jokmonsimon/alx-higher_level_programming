@@ -1,11 +1,15 @@
+
 #!/usr/bin/python3
-# 1-my_list.py
-# Brennan D Baraban <375@holbertonschool.com>
-"""Defines an inherited list class MyList."""
+"""
+Contains definiton for the class MyList that inherits from list.
+"""
+
 
 class MyList(list):
-    """Implements sorted printing for the built-in list class."""
-
+    """definiton for the class MyList that inherits from list.
+    """
     def print_sorted(self):
-        """Print a list in sorted ascending order."""
-        print(sorted(self))
+        """Prints list elements(int) in ascending order"""
+
+        sortedlist = sorted(self)
+        print(sortedlist)
