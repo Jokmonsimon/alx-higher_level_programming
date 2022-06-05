@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-"""takes your Github credentials (username and password)"""
+"""takes my Github credentials (username and password)"""
 import requests
 from sys import argv
 
